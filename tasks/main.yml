@@ -1,0 +1,43 @@
+---
+# tasks file for donfilemon.named
+- name: Install Packges 
+  yum:
+    name: "{{ packages }}"
+    update_cache: yes
+  vars:
+    packages:
+    - bind
+    - bind-utils
+- name: Copy named.conf file
+  template: 
+    src: named.conf.j2 
+    dest: /etc/named.conf
+    backup: yes
+  register: conf
+- name: Start service named if not started and enable autostart 
+  service:
+    name: named
+    state: started
+    enabled: yes
+- name: Restart service named, in all cases
+  service:
+    name: named
+    state: restarted
+  when: conf.changed
+- name: Open TCP port of firewalld
+  firewalld:
+    port: 53/tcp
+    permanent: yes
+    state: enabled
+  register: firewall
+- name: Open UDP port of firewalld
+  firewalld:
+    port: 53/udp
+    permanent: yes
+    state: enabled
+  register: firewall
+- name: Restart service firewalld, in all cases
+  service:
+    name: firewalld
+    state: restarted
+  when: firewall.changed

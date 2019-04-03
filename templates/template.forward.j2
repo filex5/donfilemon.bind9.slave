@@ -1,0 +1,22 @@
+;
+; BIND data file for linuxconfig.org
+; Template by Don Filemon
+$ORIGIN {{ forward_zone }}
+$TTL    3h
+@       IN      SOA       masterdns.{{ forward_zone }} admin.{{ forward_zone }} (
+                          1        ; Serial
+                          3h       ; Refresh after 3 hours
+                          1h       ; Retry after 1 hour
+                          1w       ; Expire after 1 week
+                          1h )     ; Negative caching TTL of 1 day
+;
+
+@       IN  NS          masterdns.{{ forward_zone }}
+@       IN  NS          secondarydns.{{ forward_zone }}
+@       IN  A           192.168.227.130
+@       IN  A           192.168.227.140
+@       IN  A           192.168.227.150  
+masterdns       IN  A   192.168.227.130
+secondarydns    IN  A   192.168.227.150
+client          IN  A   192.168.227.140
+

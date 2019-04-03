@@ -1,0 +1,21 @@
+---
+# defaults file for donfilemon.named
+slave_listen_on_ip: 127.0.0.1; 192.168.227.128;    # use ; on end of ip adress example 127.0.0.1;
+slave_listen_on_ipv6: ::1
+slave_recursion: yes
+slave_dnssec_enable: no
+slave_dnssec_validation: no
+slave_allow_network: 192.168.227.0/24
+# FORWARD ZONE
+forward_zone: filemon.local. 
+slave_forward_zone_DNS_type: slave
+forward_zone_update: none
+# REVERSE ZONE
+reverse_zone: 227.168.192.in-addr.arpa
+slave_reverse_zone_DNS_type: slave
+reverse_zone_update: none
+master_ip: 192.168.227.130
+
+
+
+

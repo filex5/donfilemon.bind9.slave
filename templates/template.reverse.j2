@@ -1,0 +1,22 @@
+;
+; BIND data file for linuxconfig.org
+; Templete by Don Filemon
+$ORIGIN {{ reverse_zone }}.
+$TTL    3h
+@       IN      SOA       masterdns.{{ forward_zone }} admin.{{ forward_zone }} (
+                          1        ; Serial
+                          3h       ; Refresh after 3 hours
+                          1h       ; Retry after 1 hour
+                          1w       ; Expire after 1 week
+                          1h )     ; Negative caching TTL of 1 day
+;
+
+@       IN  NS          masterdns.{{ forward_zone }}
+@       IN  NS          secondarydns.{{ forward_zone }}
+@       IN  PTR         {{ forward_zone }}
+masterdns       IN  A   192.168.277.130
+secondarydns    IN  A   192.168.277.150
+client          IN  A   192.168.277.140
+130     IN  PTR         masterdns.{{ forward_zone }}
+150     IN  PTR         secondarydns.{{ forward_zone }}
+140     IN  PTR         client.unixmen.{{ forward_zone }}
